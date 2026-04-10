@@ -13,16 +13,16 @@ except ImportError:
 # --- FUNCIÓN PARA LOS PLACEHOLDERS (GUI) ---
 def agregar_placeholder(entry, texto):
     """Inserta texto sugerido en gris que desaparece al escribir."""
-    entry.delete(0, tk.END) # Limpia cualquier texto previo
-    entry.insert(0, texto)
+    entry.delete(0, tk.END) 
+    entry.insert(0, texto) 
     entry.config(foreground='grey')
 
-    def al_entrar(event):
+    def al_entrar(event): # Borra el ejemplo al hacer clic
         if entry.get() == texto:
             entry.delete(0, tk.END)
             entry.config(foreground='black')
 
-    def al_salir(event):
+    def al_salir(event): # Restaura el ejemplo si la caja queda vacía
         if not entry.get():
             entry.insert(0, texto)
             entry.config(foreground='grey')
@@ -119,6 +119,7 @@ class AppFuerzaElectrica(tk.Tk):
         panel_der = ttk.Frame(marco_principal)
         panel_der.pack(side="right", fill="both", expand=True)
 
+        # Botón de cálculo general
         tk.Button(panel_der, text="🚀 CALCULAR FUERZA NETA", bg="#198754", fg="white", 
                 font=("Helvetica", 12, "bold"), command=self.calcular_fuerza, pady=10).pack(fill="x")
 
