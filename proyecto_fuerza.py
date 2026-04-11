@@ -133,6 +133,20 @@ class AppFuerzaElectrica(tk.Tk):
         # Rellena los Entry con los textos grises por primera vez.
         self.restaurar_placeholders()
 
+        # --- BOTONES DE APOYO TEÓRICO (Pop-ups) MOVIDOS AQUÍ ---
+        # Se agrupan debajo de los controles de "Limpiar Todo" para un mejor diseño
+        marco_teoria = ttk.Frame(panel_izq)
+        marco_teoria.pack(fill="x", pady=(5, 10))
+        
+        tk.Button(marco_teoria, text="📝 Ver Fórmula y Procedimiento", bg="#6f42c1", fg="white",
+                  font=("Helvetica", 10, "italic"), command=self.mostrar_procedimiento).pack(fill="x", pady=2)
+        
+        tk.Button(marco_teoria, text="📐 Ver Cálculo de Magnitud", bg="#17a2b8", fg="white",
+                  font=("Helvetica", 10, "italic"), command=self.mostrar_procedimiento_magnitud).pack(fill="x", pady=2)
+
+        tk.Button(marco_teoria, text="🔢 Ver Resolución Paso a Paso", bg="#e83e8c", fg="white",
+                  font=("Helvetica", 10, "bold"), command=self.mostrar_resolucion_paso_a_paso).pack(fill="x", pady=2)
+
         # 3. Tabla Visual (Treeview) para inventariar las cargas agregadas.
         marco_tabla = ttk.Frame(panel_izq)
         marco_tabla.pack(fill="both", expand=True, pady=10)
@@ -160,16 +174,6 @@ class AppFuerzaElectrica(tk.Tk):
         self.lbl_vector.pack(anchor="w")
         self.lbl_magnitud = tk.Label(marco_res, text="Magnitud Total: 0.00 N", font=("Courier", 14, "bold"), bg="#e9ecef", fg="#0dcaf0")
         self.lbl_magnitud.pack(anchor="w")
-
-        # --- BOTONES DE APOYO TEÓRICO (Pop-ups) ---
-        tk.Button(marco_res, text="📝 Ver Fórmula y Procedimiento", bg="#6f42c1", fg="white",
-                  font=("Helvetica", 10, "italic"), command=self.mostrar_procedimiento).pack(anchor="w", pady=2)
-        
-        tk.Button(marco_res, text="📐 Ver Cálculo de Magnitud", bg="#17a2b8", fg="white",
-                  font=("Helvetica", 10, "italic"), command=self.mostrar_procedimiento_magnitud).pack(anchor="w", pady=2)
-
-        tk.Button(marco_res, text="🔢 Ver Resolución Paso a Paso", bg="#e83e8c", fg="white",
-                  font=("Helvetica", 10, "bold"), command=self.mostrar_resolucion_paso_a_paso).pack(anchor="w", pady=2)
 
         # --- CONTROLES DE VISTA (Deslizadores / Sliders) ---
         # Scale Horizontal para manejar el Zoom
@@ -573,5 +577,5 @@ class AppFuerzaElectrica(tk.Tk):
 # --- EJECUCIÓN DEL PROGRAMA ---
 # Este bloque verifica si el archivo se está ejecutando directamente y arranca el loop de la interfaz.
 if __name__ == "__main__":
-    app = AppFuerzaElectrica()
+    app = AppFuerzaElectrica()  
     app.mainloop() # Bucle infinito que mantiene viva la ventana y "escucha" clics y teclas.
