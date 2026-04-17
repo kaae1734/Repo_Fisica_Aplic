@@ -2,6 +2,8 @@ import math # Biblioteca matemática estándar para calcular raíces cuadradas y
 import tkinter as tk # Módulo principal de interfaz gráfica (GUI) para crear ventanas, botones y etiquetas.
 from tkinter import ttk, messagebox # 'ttk' provee widgets con estilo moderno. 'messagebox' permite mostrar ventanas emergentes de error o información.
 
+from utils import agregar_placeholder # Importamos la herramienta visual desde nuestro archivo utils.py
+
 # --- GESTIÓN DE MATPLOTLIB ---
 # Matplotlib es la biblioteca que permite dibujar el plano cartesiano y los vectores.
 # Se usa un bloque try-except para evitar que el programa falle (crashee) si la computadora no tiene instalada la librería.
@@ -12,32 +14,6 @@ try:
     MATPLOTLIB_DISPONIBLE = True
 except ImportError:
     MATPLOTLIB_DISPONIBLE = False
-
-# --- FUNCIÓN DE UTILIDAD (UX) ---
-def agregar_placeholder(entry, texto):
-    """
-    Función de Experiencia de Usuario (UX). 
-    Inserta un texto gris de ejemplo dentro de una caja de entrada ('entry'). 
-    Este texto desaparece automáticamente cuando el usuario hace clic para escribir, 
-    y vuelve a aparecer si el usuario deja la caja vacía.
-    """
-    entry.delete(0, tk.END) 
-    entry.insert(0, texto) 
-    entry.config(foreground='grey')
-
-    def al_entrar(event): # Evento disparado al hacer clic dentro de la caja.
-        if entry.get() == texto:
-            entry.delete(0, tk.END)
-            entry.config(foreground='black') # Cambia el color a negro para el texto del usuario.
-
-    def al_salir(event): # Evento disparado al hacer clic fuera de la caja.
-        if not entry.get():
-            entry.insert(0, texto)
-            entry.config(foreground='grey')
-
-    # 'bind' conecta las acciones del ratón (<FocusIn> y <FocusOut>) con las funciones internas.
-    entry.bind("<FocusIn>", al_entrar)
-    entry.bind("<FocusOut>", al_salir)
 
 # --- CLASE PRINCIPAL DE LA APLICACIÓN ---
 class AppFuerzaElectrica(tk.Tk):
@@ -573,9 +549,3 @@ class AppFuerzaElectrica(tk.Tk):
                         
         self.ax.legend(loc="upper right") # Añadir leyenda en la esquina
         self.canvas.draw()
-
-# --- EJECUCIÓN DEL PROGRAMA ---
-# Este bloque verifica si el archivo se está ejecutando directamente y arranca el loop de la interfaz.
-if __name__ == "__main__":
-    app = AppFuerzaElectrica()  
-    app.mainloop() # Bucle infinito que mantiene viva la ventana y "escucha" clics y teclas.
