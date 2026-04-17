@@ -1,27 +1,30 @@
-import tkinter as tk # Módulo principal de interfaz gráfica (GUI) para crear ventanas, botones y etiquetas.
+import tkinter as tk # Módulo principal de interfaz gráfica (GUI)
 
-# --- FUNCIÓN DE UTILIDAD (UX) ---
+# --- FUNCIÓN DE UTILIDAD (UX) CORREGIDA ---
 def agregar_placeholder(entry, texto):
     """
     Función de Experiencia de Usuario (UX). 
     Inserta un texto gris de ejemplo dentro de una caja de entrada ('entry'). 
-    Este texto desaparece automáticamente cuando el usuario hace clic para escribir, 
-    y vuelve a aparecer si el usuario deja la caja vacía.
+    Corregido: Se basa en el color para borrar el texto, evitando que se mezcle
+    con lo que escribe el usuario.
     """
     entry.delete(0, tk.END) 
     entry.insert(0, texto) 
     entry.config(foreground='grey')
 
     def al_entrar(event): # Evento disparado al hacer clic dentro de la caja.
-        if entry.get() == texto:
+        # Si el texto está en gris, lo borra por completo y prepara para escribir en negro.
+        if entry.cget('foreground') == 'grey':
             entry.delete(0, tk.END)
-            entry.config(foreground='black') # Cambia el color a negro para el texto del usuario.
+            entry.config(foreground='black') 
 
     def al_salir(event): # Evento disparado al hacer clic fuera de la caja.
-        if not entry.get():
+        # Si el usuario no escribió nada (o dejó espacios), restaura el gris.
+        if not entry.get().strip():
+            entry.delete(0, tk.END)
             entry.insert(0, texto)
             entry.config(foreground='grey')
 
-    # 'bind' conecta las acciones del ratón (<FocusIn> y <FocusOut>) con las funciones internas.
+    # 'bind' conecta las acciones del ratón con las funciones internas.
     entry.bind("<FocusIn>", al_entrar)
     entry.bind("<FocusOut>", al_salir)
